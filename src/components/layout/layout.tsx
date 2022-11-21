@@ -21,7 +21,10 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   };
   return (
     <div>
-      <div className="navbar bg-base-300" style={{ marginBottom: "10px" }}>
+      <div
+        className="navbar bg-base-300 shadow-xl"
+        style={{ marginBottom: "10px" }}
+      >
         <div className="navbar-start">
           <Link to={"/"} className="btn btn-ghost normal-case text-xl">
             React Games
@@ -37,7 +40,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             </li>
           </ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end ">
           <ul>
             <li>
               <a
