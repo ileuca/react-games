@@ -1,25 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./App.css";
+import { ThemeContext } from "./contexts/theme-context";
+import ReactGames from "./react-games";
 
 function App() {
-  const [theme, setTheme] = useState<string>("light");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   return (
-    <div data-theme={theme} className={"full-size"}>
-      <button
-        className="btn btn-primary btn-md"
-        onClick={() => {
-          setTheme((prevTheme) => {
-            if (prevTheme == "light") {
-              return "dark";
-            } else {
-              return "light";
-            }
-          });
-        }}
-      >
-        Change Theme
-      </button>
-    </div>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <div data-theme={theme} className={"full-size"}>
+        <ReactGames />
+      </div>
+    </ThemeContext.Provider>
   );
 }
 
