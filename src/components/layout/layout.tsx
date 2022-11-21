@@ -2,6 +2,8 @@ import { FC, ReactNode, useContext } from "react";
 import { ReactComponent as SunIcon } from "../icons/svg/sun-icon.svg";
 import { ReactComponent as MoonIcon } from "../icons/svg/moon-icon.svg";
 import { ThemeContext } from "../../contexts/theme-context";
+import { BrowserRouter, Link } from "react-router-dom";
+
 type LayoutProps = {
   children: ReactNode;
 };
@@ -21,15 +23,17 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     <div>
       <div className="navbar bg-base-300" style={{ marginBottom: "10px" }}>
         <div className="navbar-start">
-          <a className="btn btn-ghost normal-case text-xl">React Games</a>
+          <Link to={"/"} className="btn btn-ghost normal-case text-xl">
+            React Games
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal p-0">
             <li>
-              <a>TicTacToe</a>
+              <Link to={"/tic-tac-toe"}>TicTacToe</Link>
             </li>
             <li>
-              <a>BattleShips</a>
+              <Link to={"/battle-ships"}>BattleShips</Link>
             </li>
           </ul>
         </div>
