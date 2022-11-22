@@ -1,38 +1,47 @@
 import "./tic-tac-toe.css";
+import { ReactComponent as XIcon } from "../icons/svg/x-icon.svg";
+import { ReactComponent as OIcon } from "../icons/svg/o-icon.svg";
+import BoardCell from "./components/board-cell";
+import { ReactNode, useState } from "react";
+import GameBoard from "./components/game-board";
+import { CurrentPlayerContext } from "./contexts/current-player";
+
+export type Player = {
+  playerId: number;
+  playerSymbol: string;
+  playerIcon: ReactNode;
+};
+
+const player1 = {
+  playerId: 1,
+  playerSymbol: "X",
+  playerIcon: <XIcon />,
+};
+const player2 = {
+  playerId: 2,
+  playerSymbol: "O",
+  playerIcon: <OIcon />,
+};
 
 const TicTacToeGame = () => {
+  const [currentPlayer, setCurrentPlayer] = useState<Player>(player1);
+  const players: Player[] = [player1, player2];
   return (
-    <div className="grid place-items-center h-screen">
-      <div className="game-board">
-        <button className="box rounded-lg hover:bg-sky-100">
-          200px x 200px
-        </button>
-        <button className="box rounded-lg hover:bg-sky-100">
-          200px x 200px
-        </button>
-        <button className="box rounded-lg hover:bg-sky-100">
-          200px x 200px
-        </button>
-        <button className="box rounded-lg hover:bg-sky-100">
-          200px x 200px
-        </button>
-        <button className="box rounded-lg hover:bg-sky-100">
-          200px x 200px
-        </button>
-        <button className="box rounded-lg hover:bg-sky-100">
-          200px x 200px
-        </button>
-        <button className="box rounded-lg hover:bg-sky-100">
-          200px x 200px
-        </button>
-        <button className="box rounded-lg hover:bg-sky-100">
-          200px x 200px
-        </button>
-        <button className="box rounded-lg hover:bg-sky-100">
-          200px x 200px
-        </button>
-      </div>
-    </div>
+    <CurrentPlayerContext.Provider
+      value={{ currentPlayer, setCurrentPlayer, players }}
+    >
+      <GameBoard>
+        <BoardCell />
+        <BoardCell />
+        <BoardCell />
+        <BoardCell />
+        <BoardCell />
+        <BoardCell />
+        <BoardCell />
+        <BoardCell />
+        <BoardCell />
+      </GameBoard>
+    </CurrentPlayerContext.Provider>
   );
 };
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 1000 1000" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+<desc>Created with Fabric.js 3.5.0</desc>
+<defs>
+
+<linearGradient id="a" x1="64" x2="448" y1="64" y2="448" gradientUnits="userSpaceOnUse">
+<stop stop-color="#ff003d" offset="0"/>
+<stop stop-color="#3d00eb" offset="1"/>
+</linearGradient>
+<filter id="b" x="-.045455" y="-.038462" width="1.0985" height="1.0833">
+	<feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+	<feOffset dx="2" dy="2" result="oBlur"/>
+	<feFlood flood-color="rgb(0,0,0)"/>
+	<feComposite in2="oBlur" operator="in"/>
+	<feMerge>
+		<feMergeNode/>
+		<feMergeNode in="SourceGraphic"/>
+	</feMerge>
+</filter>
+
+</defs>
+
+<path transform="matrix(1.8606 0 0 2.0313 21.486 -30.803)" d="m256 100c-72.902 0-132 59.098-132 132v48c0 72.902 59.098 132 132 132s132-59.098 132-132v-48c0-72.902-59.098-132-132-132zm-116 132c0-64.065 51.935-116 116-116s116 51.935 116 116v48c0 64.065-51.935 116-116 116s-116-51.935-116-116zm40 0c0-41.974 34.026-76 76-76s76 34.026 76 76v48c0 41.974-34.026 76-76 76s-76-34.026-76-76zm76-92c-50.81 0-92 41.19-92 92v48c0 50.81 41.19 92 92 92s92-41.19 92-92v-48c0-50.81-41.19-92-92-92z" fill="url(#a)" fill-rule="evenodd" filter="url(#b)" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+</svg>
