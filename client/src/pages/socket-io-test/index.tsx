@@ -6,10 +6,7 @@ const socket = io("http://localhost:3001");
 const SocketTest = () => {
   const messageRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<string[]>([]);
-
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
+  const [receivedMessage, setReceivedMessage] = useState<string>();
 
   const sendMessage = () => {
     if (messageRef.current) {
@@ -23,11 +20,17 @@ const SocketTest = () => {
   };
 
   useEffect(() => {
+    if (!!receivedMessage) {
+      setMessages((prevMessages) => {
+        return [...prevMessages, ` ${receivedMessage}`];
+      });
+    }
+  }, [receivedMessage]);
+
+  useEffect(() => {
     socket.on("receive_message", (data) => {
       if (data) {
-        setMessages((prevMessages) => {
-          return [...prevMessages, `Other: ${data.message} \n`];
-        });
+        setReceivedMessage(`Other: ${data.message} \n`);
       }
     });
   }, []);
@@ -52,13 +55,15 @@ const SocketTest = () => {
         </button>
       </div>
       <div>
-        <textarea
+        <div
           id="messageBoard"
-          disabled={true}
-          value={messages}
           className="textarea textarea-secondary"
           style={{ width: 370, minHeight: 500 }}
-        />
+        >
+          {messages.map((message) => {
+            return <p>{message}</p>;
+          })}
+        </div>
       </div>
     </div>
   );
