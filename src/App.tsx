@@ -3,7 +3,7 @@ import "./App.css";
 import { ThemeContext } from "./contexts/theme-context";
 import ReactGames from "./react-games";
 
-function App() {
+const App = () => {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -12,6 +12,6 @@ function App() {
       </div>
     </ThemeContext.Provider>
   );
-}
+};
 
 export default App;
