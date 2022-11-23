@@ -30,7 +30,7 @@ const SocketTest = () => {
         });
       }
     });
-  }, [socket]);
+  }, []);
 
   return (
     <div className="mt-20 ml-20 mr-20">
