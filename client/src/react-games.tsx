@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/layout";
 import BattleShips from "./pages/battle-ships";
+import SocketTest from "./pages/socket-io-test";
 import TicTacToe from "./pages/tic-tac-toe";
 
 const ReactGames = () => {
@@ -9,6 +10,7 @@ const ReactGames = () => {
       <Routes>
         <Route path="/battle-ships" element={<BattleShips />} />
         <Route path="/tic-tac-toe" element={<TicTacToe />} />
+        <Route path="/socket-io" element={<SocketTest />} />
         <Route path="/" element={<></>} />
       </Routes>
     </Layout>

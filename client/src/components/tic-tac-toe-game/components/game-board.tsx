@@ -1,5 +1,4 @@
 import { FC, ReactNode, useContext } from "react";
-import { Player } from "..";
 import { CurrentPlayerContext } from "../contexts/current-player";
 
 type GameBoardProps = {

@@ -1,5 +1,4 @@
 import { FC, ReactNode, useContext, useState } from "react";
-import { JsxElement } from "typescript";
 import { CurrentPlayerContext } from "../contexts/current-player";
 
 type BoardCellProps = {};
@@ -18,7 +17,7 @@ const BoardCell: FC<BoardCellProps> = () => {
         if (!shape) {
           setShape(currentPlayer.playerIcon);
           setCurrentPlayer(
-            players.filter((player) => player != currentPlayer)[0]
+            players.filter((player) => player !== currentPlayer)[0]
           );
         }
       }}
