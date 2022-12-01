@@ -1,5 +1,9 @@
+import { useEffect } from "react";
+import { io } from "socket.io-client";
 import "../../App.css";
 import TicTacToeGame from "../../components/tic-tac-toe-game";
+
+const socket = io("http://localhost:3001");
 
 const TicTacToe = () => {
   return (
@@ -15,7 +19,9 @@ const TicTacToe = () => {
             <button className="btn btn-warning" style={{ marginRight: "5px" }}>
               Start Single Game
             </button>
-            <button className="btn btn-success">Look For Players</button>
+            <button className="btn btn-success" onClick={() => {}}>
+              Look For Players
+            </button>
           </div>
         </div>
         <div

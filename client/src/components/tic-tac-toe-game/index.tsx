@@ -26,20 +26,17 @@ const player2 = {
 const TicTacToeGame = () => {
   const [currentPlayer, setCurrentPlayer] = useState<Player>(player1);
   const players: Player[] = [player1, player2];
+
+  const boardCellCount = 9;
+
   return (
     <CurrentPlayerContext.Provider
       value={{ currentPlayer, setCurrentPlayer, players }}
     >
       <GameBoard>
-        <BoardCell />
-        <BoardCell />
-        <BoardCell />
-        <BoardCell />
-        <BoardCell />
-        <BoardCell />
-        <BoardCell />
-        <BoardCell />
-        <BoardCell />
+        {Array.from(Array(boardCellCount).keys()).map((cellIndex) => (
+          <BoardCell key={cellIndex} cellIndex={cellIndex} />
+        ))}
       </GameBoard>
     </CurrentPlayerContext.Provider>
   );
