@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import "../../App.css";
 import TicTacToeGame from "../../components/tic-tac-toe-game";
@@ -6,6 +6,27 @@ import TicTacToeGame from "../../components/tic-tac-toe-game";
 const socket = io("http://localhost:3001");
 
 const TicTacToe = () => {
+  const [currentQueue, setCurrentQueue] = useState([]);
+  const [isInQueue, setIsInQueue] = useState(false);
+
+  const joinQueue = () => {
+    if (isInQueue) {
+      socket.emit("leaveQueue", { playerId: socket.id });
+      setIsInQueue(false);
+    } else {
+      socket.emit("joinQueue", { playerId: socket.id });
+      setIsInQueue(true);
+    }
+  };
+
+  useEffect(() => {
+    socket.on("queueJoined", (data) => {
+      setCurrentQueue(data);
+    });
+  }, [setCurrentQueue]);
+
+  console.log("PlayerQueue", currentQueue);
+
   return (
     <>
       <div
@@ -19,9 +40,18 @@ const TicTacToe = () => {
             <button className="btn btn-warning" style={{ marginRight: "5px" }}>
               Start Single Game
             </button>
-            <button className="btn btn-success" onClick={() => {}}>
-              Look For Players
-            </button>
+            <div className="indicator" style={{ marginRight: "50px" }}>
+              {isInQueue ? (
+                <span className="indicator-item badge badge-secondary">
+                  Searching...
+                </span>
+              ) : (
+                <></>
+              )}
+              <button className="btn btn-success" onClick={joinQueue}>
+                {isInQueue ? "Leave Queue" : "Join Queue"}
+              </button>
+            </div>
           </div>
         </div>
         <div
