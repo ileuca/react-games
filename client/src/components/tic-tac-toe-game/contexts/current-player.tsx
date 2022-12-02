@@ -1,6 +1,6 @@
 import React from "react";
 import { Dispatch, SetStateAction } from "react";
-import { Player } from "..";
+import { Player } from "../../../pages/tic-tac-toe";
 
 export interface ICurrentPlayerContext {
   currentPlayer: Player;
@@ -8,9 +8,9 @@ export interface ICurrentPlayerContext {
   players: Player[];
 }
 
-const undefinedPlayer: Player = {
+export const undefinedPlayer: Player = {
   playerIcon: undefined,
-  playerId: 0,
+  playerId: "0",
   playerSymbol: "",
 };
 

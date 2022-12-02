@@ -14,9 +14,9 @@ const io = new Server(server, {
 });
 
 let playerQueue = [];
-
+let latestPlayerQueue = [];
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log(`${socket.id} user connected`);
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
@@ -24,13 +24,42 @@ io.on("connection", (socket) => {
     console.log(data.playerId + " joined");
     playerQueue.push(data.playerId);
     io.emit("queueJoined", playerQueue);
+
+    if (playerQueue.length >= 2) {
+      const gameId = Math.random().toString(36).substr(2, 9);
+      const player1 =
+        playerQueue[Math.floor(Math.random() * playerQueue.length)];
+      const player2 =
+        playerQueue[Math.floor(Math.random() * playerQueue.length)];
+      io.emit("gameCreated", { gameId, player1, player2 });
+    }
   });
   socket.on("leaveQueue", (data) => {
     console.log(data.playerId + " left");
     playerQueue = playerQueue.filter((player) => player !== data.playerId);
     io.emit("queueJoined", playerQueue);
   });
+  socket.on("pong", (data) => {
+    const exists = latestPlayerQueue.includes(data.playerId);
+    if (!exists) {
+      latestPlayerQueue.push(data.playerId);
+    }
+    console.log("PlayerQueue: ", playerQueue);
+  });
+  socket.on("cellClicked", (data) => {
+    console.log("Data", data);
+    io.emit("clickedCell", data);
+    console.log("Cell Clicked: ", data);
+  });
 });
+
+setInterval(() => {
+  playerQueue = playerQueue.filter((x) => latestPlayerQueue.includes(x));
+}, 11000);
+
+setInterval(() => {
+  io.emit("ping", "ping");
+}, 10000);
 
 server.listen(3001, () => {
   console.log("Server is running");

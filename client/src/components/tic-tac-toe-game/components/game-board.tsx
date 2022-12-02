@@ -1,5 +1,6 @@
 import { FC, ReactNode, useContext } from "react";
 import { CurrentPlayerContext } from "../contexts/current-player";
+import { ThisSessionContext } from "../contexts/this-session";
 
 type GameBoardProps = {
   children: ReactNode;
@@ -7,6 +8,8 @@ type GameBoardProps = {
 
 const GameBoard: FC<GameBoardProps> = ({ children }) => {
   const { currentPlayer } = useContext(CurrentPlayerContext);
+  const { thisSession } = useContext(ThisSessionContext);
+
   return (
     <>
       <div className="alert shadow-lg bg-green-100 text-black">
@@ -24,7 +27,9 @@ const GameBoard: FC<GameBoardProps> = ({ children }) => {
               d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             ></path>
           </svg>
-          <span>{`Player ${currentPlayer.playerId} with symbol ${currentPlayer.playerSymbol} has the next move`}</span>
+          <span>{`${
+            currentPlayer.playerId === thisSession ? "You" : "Other Player"
+          } with symbol ${currentPlayer.playerSymbol} has the next move`}</span>
         </div>
       </div>
       <div className="grid place-items-center  mt-10 mb-10">
