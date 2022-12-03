@@ -1,155 +1,43 @@
-import { ReactNode, useEffect, useState } from "react";
-import { io } from "socket.io-client";
 import "../../App.css";
 import TicTacToeGame from "../../components/tic-tac-toe-game";
-import { ReactComponent as XIcon } from "../../components/icons/svg/x-icon.svg";
-import { ReactComponent as OIcon } from "../../components/icons/svg/o-icon.svg";
-import {
-  CurrentPlayerContext,
-  undefinedPlayer,
-} from "../../components/tic-tac-toe-game/contexts/current-player";
-import { ThisSessionContext } from "../../components/tic-tac-toe-game/contexts/this-session";
-import {
-  CellClicked,
-  CellClickedContext,
-} from "../../components/tic-tac-toe-game/contexts/cell-clicked";
-
-const socket = io("http://localhost:3001");
-
-export type Player = {
-  playerId: string;
-  playerSymbol: string;
-  playerIcon: ReactNode;
-};
-
-const defaultPlayers: Player[] = [
-  { playerId: "1", playerSymbol: "X", playerIcon: <XIcon /> },
-  { playerId: "2", playerSymbol: "O", playerIcon: <OIcon /> },
-];
 
 const TicTacToe = () => {
-  const [currentQueue, setCurrentQueue] = useState([]);
-  const [isInQueue, setIsInQueue] = useState(false);
-  const [gameType, setGameType] = useState<"single" | "multi" | undefined>();
-  const [gameId, setGameId] = useState<string | undefined>();
-  const [currentPlayer, setCurrentPlayer] = useState<Player>(undefinedPlayer);
-  const [players, setPlayers] = useState<Player[]>(defaultPlayers);
-  const [thisSession, setThisSession] = useState<string>(socket.id);
-  const [cellClicked, setCellClicked] = useState<CellClicked>({
-    cellIndex: undefined,
-    playerSymbol: undefined,
-  });
-
-  console.log("cellClicked", cellClicked);
-
-  const joinQueue = () => {
-    if (isInQueue) {
-      socket.emit("leaveQueue", { playerId: socket.id });
-      setIsInQueue(false);
-    } else {
-      socket.emit("joinQueue", { playerId: socket.id });
-      setIsInQueue(true);
-    }
-  };
-
-  useEffect(() => {
-    setThisSession(socket.id);
-  }, [setThisSession]);
-
-  useEffect(() => {
-    socket.on("ping", () => {
-      socket.emit("pong", { playerId: socket.id });
-    });
-
-    socket.on("queueJoined", (data) => {
-      setCurrentQueue(data);
-    });
-
-    socket.on("gameCreated", (data) => {
-      setGameType("multi");
-      setGameId(data.gameId);
-      const player1: Player = {
-        playerId: data.player1,
-        playerSymbol: "X",
-        playerIcon: <XIcon />,
-      };
-      const player2: Player = {
-        playerId: data.player2,
-        playerSymbol: "O",
-        playerIcon: <OIcon />,
-      };
-      setPlayers([player1, player2]);
-      setCurrentPlayer(player1);
-      socket.emit("leaveQueue", { playerId: socket.id });
-      setIsInQueue(false);
-    });
-
-    socket.on("clickedCell", (data) => {
-      setCellClicked({
-        cellIndex: data.cellIndex,
-        playerSymbol: data.playerSymbol,
-      });
-    });
-  }, [setCurrentQueue]);
-
   return (
-    <CurrentPlayerContext.Provider
-      value={{ players, currentPlayer, setCurrentPlayer }}
-    >
-      <ThisSessionContext.Provider value={{ thisSession, setThisSession }}>
-        <CellClickedContext.Provider value={{ cellClicked, setCellClicked }}>
-          <>
-            <div
-              className="card w-96 bg-base-200 shadow-xl"
-              style={{ height: "90%", width: "100%" }}
+    <>
+      <div
+        className="card w-96 bg-base-200 shadow-xl"
+        style={{ height: "90%", width: "100%" }}
+      >
+        <div className="navbar bg-base-200">
+          <div className="navbar-start"></div>
+          <div className="navbar-center hidden lg:flex"></div>
+          <div className="navbar-end">
+            <button
+              className="btn btn-warning"
+              style={{ marginRight: "5px" }}
+              onClick={() => {}}
             >
-              <div className="navbar bg-base-200">
-                <div className="navbar-start"></div>
-                <div className="navbar-center hidden lg:flex"></div>
-                <div className="navbar-end">
-                  <button
-                    className="btn btn-warning"
-                    style={{ marginRight: "5px" }}
-                    onClick={() => {
-                      setGameType("single");
-                      setCurrentPlayer(players[0]);
-                    }}
-                  >
-                    Start Single Game
-                  </button>
-                  <div className="indicator" style={{ marginRight: "50px" }}>
-                    {isInQueue ? (
-                      <span className="indicator-item badge badge-secondary">
-                        Searching...
-                      </span>
-                    ) : (
-                      <span className="indicator-item badge badge-primary">
-                        {`${currentQueue.length} players`}
-                      </span>
-                    )}
-                    <button className="btn btn-success" onClick={joinQueue}>
-                      {isInQueue ? "Leave Queue" : "Join Queue"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="card  bg-base-300 shadow-xl"
-                style={{ height: "90%", width: "100%" }}
-              >
-                {gameType === "single" ? (
-                  <TicTacToeGame gameRoom={undefined} />
-                ) : gameType === "multi" ? (
-                  <TicTacToeGame gameRoom={gameId} socket={socket} />
-                ) : (
-                  <></>
-                )}
-              </div>
+              Start Single Game
+            </button>
+            <div className="indicator" style={{ marginRight: "50px" }}>
+              <span className="indicator-item badge badge-primary">
+                {`${2} players`}
+              </span>
+
+              <button className="btn btn-success" onClick={() => {}}>
+                {"Join Queue"}
+              </button>
             </div>
-          </>
-        </CellClickedContext.Provider>
-      </ThisSessionContext.Provider>
-    </CurrentPlayerContext.Provider>
+          </div>
+        </div>
+        <div
+          className="card  bg-base-300 shadow-xl"
+          style={{ height: "90%", width: "100%" }}
+        >
+          <TicTacToeGame />
+        </div>
+      </div>
+    </>
   );
 };
 
