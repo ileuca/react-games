@@ -21,7 +21,6 @@ const BoardCell: FC<BoardCellProps> = ({
   const [shape, setShape] = useState<ReactNode>(undefined);
   const { cellClicked } = useContext(CellClickedContext);
 
-  console.log("cellClicked", cellClicked);
   useEffect(() => {
     if (!shape) {
       if (cellClicked.cellIndex === cellIndex) {
