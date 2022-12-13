@@ -5,7 +5,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { io } from "socket.io-client";
 import "../../App.css";
 import TicTacToeGame from "../../components/tic-tac-toe-game";
 import { ReactComponent as XIcon } from "../../components/icons/svg/x-icon.svg";
