@@ -59,6 +59,8 @@ const BoardCell: FC<BoardCellProps> = ({
           } else {
             addToast("It's not your turn!", "error");
           }
+        } else {
+          addToast("You cannot mark an already marked cell!", "error");
         }
       }}
     >
