@@ -29,9 +29,18 @@ io.on("connection", (socket) => {
       const gameId = Math.random().toString(36).substr(2, 9);
       const player1 =
         playerQueue[Math.floor(Math.random() * playerQueue.length)];
+      playerQueue = playerQueue.filter((player) => player !== player1);
       const player2 =
         playerQueue[Math.floor(Math.random() * playerQueue.length)];
-      io.emit("gameCreated", { gameId, player1, player2 });
+      playerQueue = playerQueue.filter((player) => player !== player2);
+      io.sockets.sockets.forEach((socket) => {
+        if (socket.id === player1 || socket.id === player2) {
+          socket.join(gameId);
+          console.log(socket.id + " joined " + gameId);
+        }
+      });
+      io.in(gameId).emit("gameCreated", { gameId, player1, player2 });
+      console.log("Game Created: ", gameId, player1, player2);
     }
   });
   socket.on("leaveQueue", (data) => {
@@ -48,7 +57,7 @@ io.on("connection", (socket) => {
   });
   socket.on("cellClicked", (data) => {
     console.log("Data", data);
-    io.emit("clickedCell", data);
+    io.to(data.gameId).emit("clickedCell", data);
     console.log("Cell Clicked: ", data);
   });
 });
