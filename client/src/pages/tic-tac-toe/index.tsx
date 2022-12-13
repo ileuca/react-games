@@ -46,8 +46,6 @@ const TicTacToe = () => {
     playerSymbol: undefined,
   });
 
-  console.log("cellClicked", cellClicked);
-
   const joinQueue = () => {
     if (isInQueue) {
       socket.emit("leaveQueue", { playerId: socket.id });
@@ -59,16 +57,13 @@ const TicTacToe = () => {
   };
 
   useEffect(() => {
-    setThisSession(socket.id);
-  }, [setThisSession]);
-
-  useEffect(() => {
     socket.on("ping", () => {
       socket.emit("pong", { playerId: socket.id });
     });
 
     socket.on("queueJoined", (data: SetStateAction<never[]>) => {
       setCurrentQueue(data);
+      setThisSession(socket.id);
     });
 
     socket.on(
@@ -78,8 +73,6 @@ const TicTacToe = () => {
         player1: any;
         player2: any;
       }) => {
-        setGameType("multi");
-        setGameId(data.gameId);
         const player1: Player = {
           playerId: data.player1,
           playerSymbol: "X",
@@ -94,6 +87,8 @@ const TicTacToe = () => {
         setCurrentPlayer(player1);
         socket.emit("leaveQueue", { playerId: socket.id });
         setIsInQueue(false);
+        setGameType("multi");
+        setGameId(data.gameId);
       }
     );
 
