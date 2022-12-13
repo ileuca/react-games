@@ -31,7 +31,6 @@ const BoardCell: FC<BoardCellProps> = ({
             (player) => player.playerSymbol === cellClicked.playerSymbol
           )?.playerIcon
         );
-        setEffect(true);
         setCurrentPlayer(
           players.filter((player) => player !== currentPlayer)[0]
         );
@@ -46,7 +45,6 @@ const BoardCell: FC<BoardCellProps> = ({
         effect && "animate-wiggle"
       } rounded-lg hover:bg-sky-100 bg-gray-400 shadow-inner`}
       onClick={() => {
-        setEffect(true);
         if (!shape) {
           if (currentPlayer.playerId === thisSession) {
             setShape(currentPlayer.playerIcon);
@@ -63,9 +61,22 @@ const BoardCell: FC<BoardCellProps> = ({
           }
         }
       }}
-      onAnimationEnd={() => setEffect(false)}
     >
-      {!shape ? <></> : <div className="cellAnimation">{shape}</div>}
+      {!shape ? (
+        <></>
+      ) : (
+        <div
+          className="cellAnimation "
+          onAnimationEnd={() => {
+            setEffect(true);
+            setTimeout(() => {
+              setEffect(false);
+            }, 1000);
+          }}
+        >
+          {shape}
+        </div>
+      )}
     </button>
   );
 };
