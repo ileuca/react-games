@@ -4,6 +4,7 @@ import { useToasts } from "../../../hooks/useToasts";
 import { CellClickedContext } from "../contexts/cell-clicked";
 import { CurrentPlayerContext } from "../contexts/current-player";
 import { ThisSessionContext } from "../contexts/this-session";
+import "./board-cell.css";
 
 type BoardCellProps = {
   cellIndex: number;
@@ -64,7 +65,7 @@ const BoardCell: FC<BoardCellProps> = ({
       }}
       onAnimationEnd={() => setEffect(false)}
     >
-      {shape}
+      {!shape ? <></> : <div className="cellAnimation">{shape}</div>}
     </button>
   );
 };
