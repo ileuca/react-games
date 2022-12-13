@@ -41,6 +41,7 @@ const TicTacToe = () => {
   const [players, setPlayers] = useState<Player[]>(defaultPlayers);
   const [thisSession, setThisSession] = useState<string>(socket.id);
   const [cellClicked, setCellClicked] = useState<CellClicked>({
+    playerId: undefined,
     cellIndex: undefined,
     playerSymbol: undefined,
   });
@@ -91,14 +92,19 @@ const TicTacToe = () => {
       }
     );
 
-    socket.on("clickedCell", (data: { cellIndex: any; playerSymbol: any }) => {
-      setCellClicked({
-        cellIndex: data.cellIndex,
-        playerSymbol: data.playerSymbol,
-      });
-    });
+    socket.on(
+      "clickedCell",
+      (data: { playerId: any; cellIndex: any; playerSymbol: any }) => {
+        setCellClicked({
+          playerId: data.playerId,
+          cellIndex: data.cellIndex,
+          playerSymbol: data.playerSymbol,
+        });
+      }
+    );
   }, [setCurrentQueue]);
 
+  console.log("clickedCell: ", cellClicked);
   return (
     <CurrentPlayerContext.Provider
       value={{ players, currentPlayer, setCurrentPlayer }}

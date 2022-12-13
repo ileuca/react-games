@@ -53,6 +53,7 @@ const BoardCell: FC<BoardCellProps> = ({
             );
             socket.emit("cellClicked", {
               gameId: gameId,
+              playerId: thisSession,
               cellIndex: cellIndex,
               playerSymbol: currentPlayer.playerSymbol,
             });
