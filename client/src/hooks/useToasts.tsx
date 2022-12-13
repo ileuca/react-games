@@ -17,7 +17,11 @@ type ToastContainerProps = JSX.IntrinsicAttributes &
   React.HTMLAttributes<HTMLDivElement>;
 
 const ToastContainer: FC<ToastContainerProps> = (props) => (
-  <div className="toast toast-start" style={{ zIndex: 100 }} {...props} />
+  <div
+    className="toast toast-start toast-top"
+    style={{ zIndex: 100 }}
+    {...props}
+  />
 );
 
 type ToastProps = {
