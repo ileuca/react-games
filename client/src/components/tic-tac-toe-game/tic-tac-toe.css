@@ -17,7 +17,7 @@ body {
   color: #aaa;
 }
 
-@keyframes animate-GameStartedZoomIn {
+@keyframes animate-GameStarted {
   0% {
     position: absolute;
     top: 50%;
@@ -47,19 +47,10 @@ body {
   }
 }
 
-@keyframes animate-GameStartedSlideLeft {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(-100%, 0);
-  }
-}
-
-.animate-GameStartedZoomIn {
+.animate-GameStarted {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-200%, -200%);
-  animation: animate-GameStartedZoomIn 1s linear;
+  animation: animate-GameStarted 1s linear;
 }

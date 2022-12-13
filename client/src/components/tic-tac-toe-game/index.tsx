@@ -29,10 +29,7 @@ const TicTacToeGame = ({ gameRoom, socket }: any) => {
         ))}
       </GameBoard>
 
-      <img
-        className="animate-GameStartedZoomIn animate-GameStartedSlideLeft "
-        src={GameStarted}
-      ></img>
+      <img className="animate-GameStarted" src={GameStarted}></img>
     </>
   );
 };
