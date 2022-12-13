@@ -17,22 +17,37 @@ body {
   color: #aaa;
 }
 
-@keyframes animate-GameStarted {
+@keyframes animate-GameStarted1 {
   0% {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(0, 0);
+    transform: translate(50%, 50%);
   }
 
   50% {
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(0%, 0%);
+  }
+  100% {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes animate-GameStarted2 {
+  0% {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
   }
 
-  75% {
+  50% {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -47,10 +62,18 @@ body {
   }
 }
 
-.animate-GameStarted {
+.animate-GameStarted1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: animate-GameStarted1 1s linear;
+}
+
+.animate-GameStarted2 {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-200%, -200%);
-  animation: animate-GameStarted 1s linear;
+  animation: animate-GameStarted2 1s linear;
 }
