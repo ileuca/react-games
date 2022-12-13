@@ -1,7 +1,14 @@
+import { join } from "path";
+import { useContext, useState } from "react";
 import "../../App.css";
 import TicTacToeGame from "../../components/tic-tac-toe-game";
+import { SocketContext } from "../../contexts/socket-context";
+import useSocket from "../../hooks/useSocket";
 
 const TicTacToe = () => {
+  const { socket } = useContext(SocketContext);
+  const { joinQueue, currentQueueLength } = useSocket(socket, "tic-tac-toe");
+
   return (
     <>
       <div
@@ -21,10 +28,10 @@ const TicTacToe = () => {
             </button>
             <div className="indicator" style={{ marginRight: "50px" }}>
               <span className="indicator-item badge badge-primary">
-                {`${2} players`}
+                {`${currentQueueLength} players`}
               </span>
 
-              <button className="btn btn-success" onClick={() => {}}>
+              <button className="btn btn-success" onClick={joinQueue}>
                 {"Join Queue"}
               </button>
             </div>

@@ -13,7 +13,20 @@ const io = new Server(server, {
   },
 });
 
-io.on("connection", (socket) => {});
+io.on("connection", (socket) => {
+  console.log(`${socket.id} connected`);
+  socket.on("disconnect", () => {
+    console.log(`${socket.id} disconnected`);
+  });
+
+  socket.on("joinQueue", async ({ gameRoom }) => {
+    socket.join(gameRoom);
+    let roomUsers = await io.in(gameRoom).fetchSockets();
+    socket.to(gameRoom).emit("joinedQueue", {
+      queueLength: roomUsers.length,
+    });
+  });
+});
 
 server.listen(3001, () => {
   console.log("Server is running");
