@@ -1,5 +1,6 @@
 import { FC, ReactNode, useContext, useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
+import { useToasts } from "../../../hooks/useToasts";
 import { CellClickedContext } from "../contexts/cell-clicked";
 import { CurrentPlayerContext } from "../contexts/current-player";
 import { ThisSessionContext } from "../contexts/this-session";
@@ -20,7 +21,7 @@ const BoardCell: FC<BoardCellProps> = ({
   const [effect, setEffect] = useState(false);
   const [shape, setShape] = useState<ReactNode>(undefined);
   const { cellClicked } = useContext(CellClickedContext);
-
+  const { addToast } = useToasts();
   useEffect(() => {
     if (!shape) {
       if (cellClicked.cellIndex === cellIndex) {
@@ -57,7 +58,7 @@ const BoardCell: FC<BoardCellProps> = ({
               playerSymbol: currentPlayer.playerSymbol,
             });
           } else {
-            alert("It's not your turn!");
+            addToast("It's not your turn!", "error");
           }
         }
       }}
