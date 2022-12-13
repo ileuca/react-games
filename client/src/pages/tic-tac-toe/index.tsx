@@ -1,4 +1,10 @@
-import { ReactNode, useEffect, useState } from "react";
+import {
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { io } from "socket.io-client";
 import "../../App.css";
 import TicTacToeGame from "../../components/tic-tac-toe-game";
@@ -13,8 +19,7 @@ import {
   CellClicked,
   CellClickedContext,
 } from "../../components/tic-tac-toe-game/contexts/cell-clicked";
-
-const socket = io("http://localhost:3001");
+import { SocketContext } from "../../contexts/socket-context";
 
 export type Player = {
   playerId: string;
@@ -28,6 +33,7 @@ const defaultPlayers: Player[] = [
 ];
 
 const TicTacToe = () => {
+  const { socket } = useContext(SocketContext);
   const [currentQueue, setCurrentQueue] = useState([]);
   const [isInQueue, setIsInQueue] = useState(false);
   const [gameType, setGameType] = useState<"single" | "multi" | undefined>();
@@ -61,30 +67,37 @@ const TicTacToe = () => {
       socket.emit("pong", { playerId: socket.id });
     });
 
-    socket.on("queueJoined", (data) => {
+    socket.on("queueJoined", (data: SetStateAction<never[]>) => {
       setCurrentQueue(data);
     });
 
-    socket.on("gameCreated", (data) => {
-      setGameType("multi");
-      setGameId(data.gameId);
-      const player1: Player = {
-        playerId: data.player1,
-        playerSymbol: "X",
-        playerIcon: <XIcon />,
-      };
-      const player2: Player = {
-        playerId: data.player2,
-        playerSymbol: "O",
-        playerIcon: <OIcon />,
-      };
-      setPlayers([player1, player2]);
-      setCurrentPlayer(player1);
-      socket.emit("leaveQueue", { playerId: socket.id });
-      setIsInQueue(false);
-    });
+    socket.on(
+      "gameCreated",
+      (data: {
+        gameId: SetStateAction<string | undefined>;
+        player1: any;
+        player2: any;
+      }) => {
+        setGameType("multi");
+        setGameId(data.gameId);
+        const player1: Player = {
+          playerId: data.player1,
+          playerSymbol: "X",
+          playerIcon: <XIcon />,
+        };
+        const player2: Player = {
+          playerId: data.player2,
+          playerSymbol: "O",
+          playerIcon: <OIcon />,
+        };
+        setPlayers([player1, player2]);
+        setCurrentPlayer(player1);
+        socket.emit("leaveQueue", { playerId: socket.id });
+        setIsInQueue(false);
+      }
+    );
 
-    socket.on("clickedCell", (data) => {
+    socket.on("clickedCell", (data: { cellIndex: any; playerSymbol: any }) => {
       setCellClicked({
         cellIndex: data.cellIndex,
         playerSymbol: data.playerSymbol,
