@@ -19,6 +19,7 @@ import {
   CellClickedContext,
 } from "../../components/tic-tac-toe-game/contexts/cell-clicked";
 import { SocketContext } from "../../contexts/socket-context";
+import Loader from "../../components/global/Loader/loader";
 
 export type Player = {
   playerId: string;
@@ -159,6 +160,7 @@ const TicTacToe = () => {
                 )}
               </div>
             </div>
+            {isInQueue ? <Loader /> : <></>}
           </>
         </CellClickedContext.Provider>
       </ThisSessionContext.Provider>

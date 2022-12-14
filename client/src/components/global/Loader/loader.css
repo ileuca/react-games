@@ -1,0 +1,80 @@
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid;
+  border-left: 5px solid;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.s50 {
+  box-shadow: inset 1 2 1 3px;
+  color: gold;
+  width: 70px;
+  height: 70px;
+  rotate: 90deg;
+  opacity: 80%;
+  box-shadow: 0.5px 0.5px 100px 1px gold;
+}
+
+.s100 {
+  box-shadow: inset 1 2 1 3px;
+  color: chartreuse;
+  width: 100px;
+  height: 100px;
+  rotate: 360deg;
+  opacity: 80%;
+  box-shadow: 0.5px 0.5px 100px 1px chartreuse;
+}
+
+.s150 {
+  box-shadow: inset 1 2 1 3px;
+  color: chocolate;
+  width: 150px;
+  height: 150px;
+  rotate: 270deg;
+  opacity: 80%;
+  box-shadow: 0.5px 0.5px 100px 1px chocolate;
+}
+
+.s200 {
+  box-shadow: inset 1 2 1 3px;
+  color: aqua;
+  width: 200px;
+  height: 200px;
+  rotate: 180deg;
+  opacity: 80%;
+  box-shadow: 0.5px 0.5px 100px 1px aqua;
+}
+
+.s250 {
+  box-shadow: inset 1 2 1 3px;
+  color: blueviolet;
+  width: 250px;
+  height: 250px;
+  rotate: 90deg;
+  opacity: 80%;
+  box-shadow: 0.5px 0.5px 100px 1px blueviolet;
+}
+
+.s300 {
+  box-shadow: inset 1 2 1 3px;
+  color: brown;
+  width: 300px;
+  height: 300px;
+  opacity: 80%;
+  box-shadow: 0.5px 0.5px 100px 1px brown;
+}
